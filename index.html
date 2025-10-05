@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Davier Tan — Portfolio & Resume</title>
+  <meta name="description" content="Portfolio and resume of Davier Tan. Civil Engineer with passion in construction, innovation and problem solving." />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700;800&family=Raleway:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* Color Variables */
+      --bg: #34548a;          /* Main Background Blue */
+      --card: #0b1220;        /* Deep Navy/Card Background */
+      --muted: #97a0b6;       /* Sub-text/Hinting Gray-Blue */
+      --accent: #00b5ad;      /* Primary Turquoise Accent */
+      --accent-2: #ff8b38;    /* Secondary Orange Accent (CTA) */
+      --glass: rgba(255,255,255,0.06); /* Glass Effect */
+      --highlight: #ffd166;  /* Yellow Highlight */
+      
+      /* Typography Variables - CORRECTLY DEFINED */
+      --font-body: 'Raleway', sans-serif;
+      --font-headline: 'Montserrat', sans-serif;
+      --font-mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --weight-headline: 800; /* Extra-bold */
+      --size-h1: 3.5rem;      /* Larger for screen impact */
+      --size-h2: 2.5rem;
+      --text-color: #e6eef8;   /* Light text color for contrast on dark blue */
+      --radius: 14px;
+    }
+
+    /* Global style fixes */
+    header{
+      position:fixed;
+      top:0;left:0;right:0;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 40px;
+      z-index:1000;
+      background:rgba(15,23,36,0.7);
+      backdrop-filter:blur(10px);
+
+      /* Add for visual separation*/
+      border-bottom: 3px solid var(--glass);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Add a slight shadow for depth */
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#022;box-shadow:0 4px 14px rgba(0,0,0,0.5)}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+    nav{display:flex;gap:12px}
+    nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:10px;font-size:14px;transition:all 0.3s}
+    nav a:hover{color:#fff;background:var(--glass)}
+
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      /* Using the correctly defined body font and text color */
+      font-family: var(--font-body);
+      background:linear-gradient(180deg,#86a8e2 0%, var(--bg) 100%);
+      color: var(--text-color); /* Use a variable for consistency */
+      line-height:1.7; /* Increased for better readability in body text */
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+      scroll-behavior: smooth;
+    }
+
+    section{
+      height:100vh;
+      scroll-snap-align:start;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      padding:60px 20px;
+    }
+
+    /* Hero/About section */
+    #about h2 {
+      font-family: var(--font-headline); 
+      font-weight: var(--weight-headline); /* Use variable for consistency */
+      font-size: var(--size-h1); /* Use variable for consistency */
+      color: var(--accent-2); /* Changed to ORANGE for a welcoming, high-energy headline */
+      margin-bottom: 24px; /* Increased spacing */
+      text-transform: uppercase; /* Add punch to the headline */
+      letter-spacing: 2px;
+    }
+    #about p {
+      max-width: 800px;
+      /* Remove the incorrect text variable and use the correct body color */
+      color: var(--text-color); 
+      margin-bottom: 18px; /* Increased spacing for paragraphs */
+      text-align: center;
+      font-weight: 400; /* Ensure body text isn't too bold */
+      font-size: 1.1rem; /* Slightly larger text for main content */
+    }
+    /* Highlight the passion/industry text */
+    #about p strong {
+        color: var(--accent); /* Primary Turquoise accent */
+        font-weight: 700;
+    }
+    .photos {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px; /* Increased margin */
+      flex-wrap: wrap;
+      justify-content: center; /* CENTERED the photo block */
+    }
+
+    /* Projects section */
+    #projects h3, #resume h3, #contact h3 {
+      font-family: var(--font-headline);
+      font-weight: var(--weight-headline);
+      font-size: var(--size-h2);
+      color: var(--text-color); /* Default to white/light text */
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .slider{
+      position:relative;
+      overflow:hidden;
+      width:100%;
+      max-width: 1920px;
+      border-radius:14px}
+    .slides{display:flex;transition:transform 0.8s ease-in-out}
+    .project-card{min-width:100%;flex-shrink:0;background:var(--card);padding:14px;border-radius:12px;text-align:center}
+    .project-card img{
+      width:100%;
+      border-radius:8px;
+      height:70vh;
+      object-fit:cover;
+      border-radius: 12px;
+      margin-bottom:12px}
+    .project-card h4{margin:0;font-size:20px}
+    .project-card p{font-size:14px;color:var(--muted)}
+    .project-card ul {
+      list-style-type: circle;
+      list-style-position: outside;
+      margin-top: 8px;
+      padding-left: 24px; /* Ensures bullets are visible */
+      color: var(--muted);
+      text-align: left;
+    }
+    .project-card ul strong {
+      display: block;
+      color: var(--accent-2);
+      margin-bottom: 4px;
+    }
+    .slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:var(--glass);border:none;color:#fff;font-size:24px;padding:8px 12px;border-radius:50%;cursor:pointer;backdrop-filter:blur(6px);transition:all 0.3s}
+    .slider-btn:hover{background:rgba(255,255,255,0.2)}
+    .prev{left:12px}
+    .next{right:12px}
+
+    /* Resume section */
+    #resume
+    .resume-box{max-width:600px;background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent);padding:20px;border-radius:12px;text-align:center}
+    .resume-box ul{list-style:none;padding:0;color:var(--muted);font-size:14px}
+    .resume-box li{margin:8px 0}
+
+    /* Contact section */
+    #contact 
+    #contact p{color:var(--muted);margin-bottom:10px;text-align:center}
+    #contact a{color:var(--accent-2);text-decoration:none;font-weight:600}
+
+    footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Dot nav */
+    .dot-nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 2000;
+    }
+    .dot-nav a {
+      width: 12px;
+      height: 12px;
+      background: var(--muted);
+      border-radius: 50%;
+      display: block;
+      position: relative;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .dot-nav a:hover {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+    .dot-nav a::after {
+      content: attr(data-label);
+      position: absolute;
+      right: 150%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, right 0.3s;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .dot-nav a:hover::after {
+      opacity: 1;
+      right: 130%;
+    }
+    .dot-nav a.active {
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    @media(max-width:768px){
+      header{padding:12px 20px}
+      .photos img{width:140px;height:100px}
+      .project-card img{height:40vh}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">DT</div>
+      <div>
+        <h1>Davier Tan</h1>
+        <p>Civil Engineer — Construction & Innovation</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Dot nav -->
+  <div class="dot-nav">
+    <a href="#about" data-label="About"></a>
+    <a href="#projects" data-label="Projects"></a>
+    <a href="#resume" data-label="Resume"></a>
+    <a href="#contact" data-label="Contact"></a>
+  </div>
+
+  <!-- Sections -->
+  <section id="about">
+    <h2>About Me</h2>
+    <p style="text-align: justify;">
+      I am passionate about learning and solving problems. A critical thinker who thrives in challenging scenarios, I constantly push myself to the boundary. I enjoy adventure, taking risks, and testing my limits. I cherish meaningful connections and value collaboration and teamwork.
+    </p>
+    <p style="text-align: justify;">
+      With a strong passion in construction, I enjoy the fast-paced environment and the immense satisfaction of seeing a project through to completion. I seek innovative ways to enhance construction processes, striving for efficiency and higher industry standards. My goal is to contribute meaningfully to the built environment and raise the bar in our industry.
+    </p>
+    <p style="text-align: justify;">
+      In my free time, I enjoy outdoor activities such as cycling, squash and exploring new places. I believe in maintaining a healthy work-life balance and continuously seek personal growth through new experiences. 
+    </p>
+
+    <div id="container">
+      <div id="floated", style="text-align: justify;">
+        I am passionate about learning and solving problems. A critical thinker who thrives in challenging scenarios, I constantly push myself to the boundary. I enjoy adventure, taking risks, and testing my limits. I cherish meaningful connections and value collaboration and teamwork.
+      </div>
+    </div>
+
+    <div class="photos">
+      <img src="photo1.jpg" alt="Photo of Davier Tan" />
+      <img src="photo2.jpg" alt="Photo of Davier at work" />
+      <img src="photo3.jpg" alt="Adventure and hobbies" />
+    </div>
+  </section>
+
+  <section id="projects">
+    <h3>Past Projects</h3>
+    <div class="slider">
+      <div class="slides">
+        <div class="project-card">
+          <img src="images/past-projects/kns.jpg" alt="Project 1" />
+          <h4>Katoen Natie Warehouse</h4>
+          <p>Relevant experiences: .<br>Duration: 12 months.<br>Project Sum: $40M.</p>
+        </div>
+        <div class="project-card">
+          <img src="project2.jpg" alt="Project 2" />
+          <h4>Additions & Alterations for 80 Bendemeer (former Hyflux building)</h4>
+          <p>Duration: 12 months.
+            <br>Project Sum: $1.2M. </p>
+          <ul> 
+            <strong>Work done:</strong> 
+            <li>Erection of new 10-storey lift shaft</li>
+            <li>Installation of new MEP services</li>
+            <li>Facelift for lift lobby</li>  
+          </ul>
+        </div>
+        <div class="project-card">
+          <img src="project3.jpg" alt="Project 3" />
+          <h4>Project C</h4>
+          <p>Work done: Fast-paced construction delivery.<br>Duration: 6 months.<br>Project Sum: $800k.</p>
+        </div>
+      </div>
+      <button class="slider-btn prev">❮</button>
+      <button class="slider-btn next">❯</button>
+    </div>
+  </section>
+
+  <section id="resume">
+    <h3>Accreditations & Certifications</h3>
+    <div class="resume-box">
+      <ul>
+        <li>Master of Science in Civil Engineering (Industrial Digitalisation and Project Management)</li>
+        <li>Bachelor of Civil Engineering (Distinction)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h3>Contact Me</h3>
+    <p>Leave me an email or drop me a call if there are opportunities or collaborations.</p>
+    <p><a href="mailto:hello@yourdomain.com">hello@yourdomain.com</a></p>
+    <footer>
+      © <span id="year"></span> Davier Tan — Built with 🚀 passion
+    </footer>
+  </section>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Project slider script
+    const slides = document.querySelector('.slides');
+    const slideItems = document.querySelectorAll('.project-card');
+    const prevBtn = document.querySelector('.prev');
+    const nextBtn = document.querySelector('.next');
+    let index = 0;
+
+    function showSlide(i){
+      if(i < 0) index = slideItems.length - 1;
+      else if(i >= slideItems.length) index = 0;
+      else index = i;
+      slides.style.transform = `translateX(-${index * 100}%)`;
+    }
+    prevBtn.addEventListener('click',()=>showSlide(index-1));
+    nextBtn.addEventListener('click',()=>showSlide(index+1));
+    setInterval(()=>showSlide(index+1),6000);
+
+    // Highlight active dot
+    const sections = document.querySelectorAll("section");
+    const dots = document.querySelectorAll(".dot-nav a");
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(sec => {
+        const top = window.scrollY;
+        if(top >= sec.offsetTop - window.innerHeight/2){
+          current = sec.getAttribute("id");
+        }
+      });
+      dots.forEach(dot => {
+        dot.classList.remove("active");
+        if(dot.getAttribute("href") === `#${current}`){
+          dot.classList.add("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
