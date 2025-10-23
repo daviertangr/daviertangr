@@ -1,2 +1,9 @@
+References:
+https://react-ui-awesome.netlify.app/text-animations -> animations for websites
+https://www.sunnypatel.net/
+
+
+
 To add:
 - skills and software proficiency
+- Adjust phone viewing
