@@ -35,8 +35,6 @@ function erase() {
 type();
 
 
-
-
 // Menu toggle script for mobile view
 menuToggle.addEventListener('click', () => {
   menuToggle.classList.toggle('active');
