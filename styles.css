@@ -1,45 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@200&display=swap');
-
-
-/* --- Mobile dropdown menu (with fade transition) --- */
-.mobile-menu {
-  position: fixed;
-  top: 70px; /* just below header */
-  left: 0;
-  width: 100%;
-  background: rgba(15,23,36,0.95);
-  backdrop-filter: blur(8px);
-  flex-direction: column;
-  align-items: center;
-  padding: 15px 0;
-  z-index: 999;
-
-  /* start hidden */
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.mobile-menu a {
-  color: #fff;
-  text-decoration: none;
-  padding: 12px 0;
-  width: 100%;
-  text-align: center;
-  font-size: 1.1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-/* --- Fade + slide in when active --- */
-.mobile-menu.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-
 html, body {
     height: 100vh;
     scroll-snap-type: y mandatory;
@@ -72,7 +31,7 @@ html, body {
 /* Global style fixes */
 header{
     position:fixed;
-    height: 80px;
+    height: clamp(50px,10%,80px);
     top:0;left:0;right:0;
     display:flex;
     flex: 1 1 auto;
@@ -257,7 +216,7 @@ section{
 /* Projects section */
 #projects  {
     color: var(--text-color);
-    scroll-margin-top: 80px;   /* keeps header from hiding top */
+    scroll-margin-top: 10%;   /* keeps header from hiding top */
     height:97vh;
 }
 .slider{
