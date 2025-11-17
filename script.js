@@ -42,22 +42,28 @@ menuToggle.addEventListener('click', () => {
 });
 
 
-// Project slider script
-const slides = document.querySelector('.slides');
-const slideItems = document.querySelectorAll('.project-card');
-const prevBtn = document.querySelector('.prev');
-const nextBtn = document.querySelector('.next');
-let index = 0;
+//Script for Project Section Cards Slider
+let width = document.querySelector('.card-container').offsetWidth;
+let numberOfCards = document.querySelectorAll('.card').length;
+let firstCard = document.querySelector('.card-container').firstElementChild;
+let current = 1;
 
-function showSlide(i){
-if(i < 0) index = slideItems.length - 1;
-else if(i >= slideItems.length) index = 0;
-else index = i;
-slides.style.transform = `translateX(-${index * 100}%)`;
+function moveImg(){
+  let numberOfPixels = width * current;
+
+  if(current === numberOfCards){
+    firstImg.style.marginLeft = "0px";
+    current = 1;
+  } else {
+    firstCard.style.marginLeft = `-${numberOfPixels}px`;
+    current++;
+  }
 }
-prevBtn.addEventListener('click',()=>showSlide(index-1));
-nextBtn.addEventListener('click',()=>showSlide(index+1));
-setInterval(()=>showSlide(index+1),6000);
+
+setInterval("moveImg()", 2000);
+
+
+
 
 // Highlight active dot
 const sections = document.querySelectorAll("section");
