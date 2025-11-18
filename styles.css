@@ -10,6 +10,7 @@ html, body {
     --bg: #C7D3DD;          /* Main Background Blue */
     --card-light: #d6c9c9;  /* Light Card Background */
     --accent-dark: #37393a; /* Dark Accent for text */
+    --accent-1: #b10000;
     --accent-2: #ff8b38;    /* Secondary Orange Accent (CTA) */
 
     --card: #030303;        /* Deep Navy/Card Background */
@@ -25,10 +26,14 @@ html, body {
     --font-headline: 'Montserrat', sans-serif;
     --font-mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     --weight-headline: 800; /* Extra-bold */
+    --weight-h3:600;
     --size-h1: 3.5rem;      /* Larger for screen impact */
     --size-h2: 2.5rem;
+    --size-h3: 1.75rem;
     --text-color: #37393a;   /* Standard Text Color */
     --radius: 14px;
+
+    --header-height: clamp(50px,10%,80px);
 }
 
 
@@ -36,7 +41,7 @@ html, body {
 /* Global style fixes */
 header{
     position:fixed;
-    height: clamp(50px,10%,80px);
+    height: var(--header-height);
     top:0;left:0;right:0;
     display:flex;
     flex: 1 1 auto;
@@ -47,7 +52,7 @@ header{
     backdrop-filter:blur(10px);
 
     /* Add for visual separation*/
-    border-bottom: 3px solid var(--glass);
+    border-bottom: 3px solid var(--accent-2);
     box-shadow: 0 4px 12px rgba(0,0,0,0.3); /* Add a slight shadow for depth */
 }
 
@@ -55,9 +60,9 @@ header{
 .logo{width: 3%; height: 100%;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#022;box-shadow:0 4px 14px rgba(0,0,0,0.5)}
 .brand h1{font-size:10%;margin:0}
 .brand p{margin:0;font-size:12px;color:var(--muted)}
-nav{display:center;gap:20px}
+nav {display:center;gap:20px}
 nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:10px;font-size:18px;transition:all 0.3s}
-nav a:hover{color:#fff;background:var(--glass)}
+nav a:hover{color:#fff;background:var(--glass);}
 
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -67,20 +72,39 @@ body{
     background: var(--bg);
     color: var(--text-color); /* Use a variable for consistency */
     line-height:1.7; /* Increased for better readability in body text */
-    overflow-y: scroll;
-    scroll-behavior: smooth;
 }
 
 section{
-    height: 100vh; /* Full viewport height for each section only if want to use snap scrolling */
+    scroll-margin-top: var(--header-height);
+    height: clamp(auto, 100%, 100vh); /* Full viewport height for each section only if want to use snap scrolling */
     width: 100vw;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items: center;
-    padding:100px 20px 20px;
-    ;
 }
+
+
+/* Home section */
+#home {
+    background-color: var(--section-1);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 0;
+}
+#home .intro-box p{
+    font-family: var(--font-headline);
+    font-size: 4rem;
+    font-weight: var(--weight-headline);
+    color: var(--accent-dark);
+    max-width: 100vw;
+    height: auto;
+}
+
+
 
 /* Hero/About section */
 #about h2, #projects h2, #resume h2, #contact h2 {
@@ -96,10 +120,9 @@ section{
 /* ABOUT TIMELINE SECTION */
 #about {
     position: sticky;
-    background: linear-gradient(180deg, var(--card), var(--bg));
-    color: var(--section-1);
+    background: linear-gradient(180deg, var(--bg), var(--section-2));
+    color: var(--accent-dark);
     overflow: visible;
-    scroll-margin-top: 100px;   /* keeps header from hiding top */
 }
 
 /* total scroll distance = one viewport per year */
@@ -236,14 +259,17 @@ section{
 }
 .resume-box{max-width:600px;background:linear-gradient(180deg, rgba(255,255,255,0.04), transparent);padding:20px;border-radius:12px;text-align:center}
 .resume-box ul{list-style:none;padding:0;color:var(--muted);font-size:14px}
-.resume-box li{margin:8px 0}
+.resume-box li{margin:8px 0;font-size: 1rem;}
+.resume-box h3{margin-bottom:10px;color:var(--accent-dark);font-weight: var(--weight-h3); font-size:var(--size-h3);text-decoration: underline;}
 
 
 
 /* Contact section */
-#contact 
+#contact {
+    background-color: var(--section-2);
+}
 #contact p{color:var(--muted);margin-bottom:10px;text-align:center}
-#contact a{color:var(--accent-2);text-decoration:none;font-weight:600}
+#contact a{color:var(--accent-1);text-decoration:none;font-weight:var(--weight-h3);font-size: large;}
 
 footer{margin-top:20px;color:var(--muted);font-size:13px;text-align:center}
 

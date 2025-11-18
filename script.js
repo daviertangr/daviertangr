@@ -2,8 +2,9 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 //typewriter effect for intro text
 const aboutText = [
-  "Hello!",
-  "I'm Davier.",
+  "Hey there!",
+  "I'm Davier!",
+  "A passionate Civil Engineer about construction, innovation, and problem-solving.",
   "Welcome to my portfolio!",
 ];
 
