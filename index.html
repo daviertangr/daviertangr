@@ -10,7 +10,6 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700;800&family=Raleway:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 
@@ -19,7 +18,7 @@
 <body>
   <header>
     <div class="logo">
-      <img src="your-logo.png" alt="Logo">
+      <img src="your-logo.png" alt="Davier Tan logo" loading="eager">
     </div>
 
     <!-- Desktop navigation -->
@@ -31,20 +30,20 @@
     </nav>
 
     <!-- Mobile hamburger -->
-    <div class="menu-toggle" id="menu-toggle">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
       <span></span>
       <span></span>
       <span></span>
-    </div>
+    </button>
   </header>
 
   <!-- Mobile menu (hidden by default) -->
-  <div class="mobile-menu" id="mobile-menu">
+  <nav class="mobile-menu" id="mobile-menu">
     <a href="#home">Home</a>
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
-  </div>
+  </nav>
 
 
   <!-- Dot nav -->
@@ -67,31 +66,80 @@
   </section>
 
 
+  <!-- ABOUT SECTION -->
+  <section id="about" class="reveal">
+    <h2>About Me</h2>
+    <div class="about-box">
+      <p class="about-bio">
+        I'm Davier, a Civil Engineer with a passion for construction, innovation, and problem-solving.
+        My background spans structural design, BIM coordination, and project management — with an
+        academic focus on industrial digitalisation to bring smarter workflows to the construction site.
+      </p>
+      <div class="about-highlights">
+        <div class="about-highlight">
+          <span class="about-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Structural beam -->
+              <rect x="10" y="26" width="44" height="10" rx="2" fill="var(--accent)"/>
+              <path d="M16 36 V50" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M48 36 V50" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M32 36 V50" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <p class="about-highlight-title">Structural Design</p>
+        </div>
+        <div class="about-highlight">
+          <span class="about-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- BIM cube -->
+              <path d="M32 8 L54 20 V44 L32 56 L10 44 V20 Z" stroke="var(--accent-dark)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+              <path d="M32 8 V32 M32 32 L54 20 M32 32 L10 20" stroke="var(--accent-2)" stroke-width="3" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <p class="about-highlight-title">BIM & Digitalisation</p>
+        </div>
+        <div class="about-highlight">
+          <span class="about-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Checklist -->
+              <rect x="14" y="10" width="36" height="44" rx="4" stroke="var(--accent-dark)" stroke-width="3" fill="none"/>
+              <path d="M21 24 L25 28 L33 19" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M38 22 H44" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M21 40 L25 44 L33 35" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M38 38 H44" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <p class="about-highlight-title">Project Management</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
 
 <!-- Projects-->
-  <section id="projects">
+  <section id="projects" class="reveal">
     <h2>Past Projects</h2>
         <div class="card-container">
           <div class="card">
-            <img src="images/past-projects/kns.jpg" alt="Project 1" />
+            <img src="images/past-projects/kns.jpg" alt="Katoen Natie Warehouse structural project" loading="lazy" decoding="async" />
             <div class="card-content">
               <h3>Katoen Natie Warehouse</h3>
               <p>In charge of all structural aspects of the project.<br>Duration: 12 months.<br>Project Sum: $40M.</p> 
             </div>
           </div>
           <div class="card">
-            <img src="images/past-projects/80br.jpg" alt="Project 3" />
+            <img src="images/past-projects/80br.jpg" alt="A&amp;A at 80 Bendemeer Road project" loading="lazy" decoding="async" />
             <div class="card-content">
               <h3>A&A at 80 Bendemeer Road</h3>
-              <p>Relevant experiences: .<br>Duration: 10 months.<br>Project Sum: $25M.</p>
+              <p>Duration: 10 months.<br>Project Sum: $25M.</p>
             </div>
         </div>
         <div class="card">
-            <img src="images/past-projects/wohhup.jpg" alt="Project 2" />
+            <img src="images/past-projects/wohhup.jpg" alt="T310 Bayshore MRT Station project" loading="lazy" decoding="async" />
             <div class="card-content">
               <h3>T310 Bayshore MRT Station</h3>
-              <p>Relevant experiences: .<br>Duration: 8 months.<br>Project Sum: $15M.</p>
+              <p>Duration: 8 months.<br>Project Sum: $15M.</p>
             </div>
         </div>
         
@@ -99,25 +147,99 @@
 
 
 
-  <section id="resume">
+  <section id="resume" class="reveal">
     <h2>Certifications & Skills</h2>
     <div class="resume-box">
-      <ul>
-        <h3>Certifications</h3>
-        <li>Master of Science in Civil Engineering (Industrial Digitalisation and Project Management)</li>
-        <li>Bachelor of Civil Engineering (Distinction)</li>
+      <h3>Certifications</h3>
+      <ul class="cert-list">
+        <li class="cert-item">
+          <span class="cert-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Drafting compass: advanced/master-level design & planning -->
+              <circle cx="32" cy="14" r="4" fill="var(--accent-2)"/>
+              <path d="M32 18 L18 54" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M32 18 L46 54" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
+              <path d="M22 44 H42" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="18" cy="56" r="3" fill="var(--accent-1)"/>
+              <circle cx="46" cy="56" r="3" fill="var(--accent-1)"/>
+            </svg>
+          </span>
+          <div class="cert-text">
+            <p class="cert-title">Master of Science in Civil Engineering</p>
+            <p class="cert-sub">Industrial Digitalisation and Project Management</p>
+          </div>
+        </li>
+        <li class="cert-item">
+          <span class="cert-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Graduation cap: foundational degree -->
+              <path d="M32 12 L58 24 L32 36 L6 24 Z" fill="var(--accent)"/>
+              <path d="M18 29 V42 C18 46 25 50 32 50 C39 50 46 46 46 42 V29" stroke="var(--accent-dark)" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M54 24 V38" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="54" cy="41" r="3" fill="var(--accent-2)"/>
+            </svg>
+          </span>
+          <div class="cert-text">
+            <p class="cert-title">Bachelor of Civil Engineering</p>
+            <p class="cert-sub">Distinction</p>
+          </div>
+        </li>
       </ul>
+
+      <h3 class="skills-heading">Skills & Software</h3>
+      <div class="skills-groups">
+        <div class="skill-group">
+          <p class="skill-group-label">Microsoft Office</p>
+          <ul class="skill-tags">
+            <li>Project</li>
+            <li>Excel</li>
+            <li>PowerPoint</li>
+            <li>Word</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-label">BIM & Coordination</p>
+          <ul class="skill-tags">
+            <li>Revit</li>
+            <li>Navisworks Manage</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-label">Drafting</p>
+          <ul class="skill-tags">
+            <li>AutoCAD</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-label">Structural Analysis</p>
+          <ul class="skill-tags">
+            <li>SAP2000</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-label">Visualization</p>
+          <ul class="skill-tags">
+            <li>D5 Render</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-label">Design & Modeling</p>
+          <ul class="skill-tags">
+            <li>Fusion 360</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
 
 
-  <section id="contact">
+  <section id="contact" class="reveal">
     <h2>Contact Me</h2>
     <p>Leave me an email if there are opportunities or collaborations.</p>
     <p><a href="mailto:daviercfar+collab@gmail.com">daviercfar+collab@gmail.com</a></p>
     <footer>
-      © <span id="year"></span> Davier Tan — Built with passion for constructiopn and learning experiences.
+      © <span id="year"></span> Davier Tan — Built with passion for construction and learning experiences.
     </footer>
   </section>
 

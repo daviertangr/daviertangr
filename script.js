@@ -36,93 +36,66 @@ function erase() {
 type();
 
 
-// Menu toggle script for mobile view
-menuToggle.addEventListener('click', () => {
-  menuToggle.classList.toggle('active');
-  mobileMenu.classList.toggle('active');
-});
+// Mobile menu toggle (hamburger <-> slide-down nav)
+const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
 
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = menuToggle.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+  });
 
-//Script for Project Section Cards Slider
-let width = document.querySelector('.card-container').offsetWidth;
-let numberOfCards = document.querySelectorAll('.card').length;
-let firstCard = document.querySelector('.card-container').firstElementChild;
-let current = 1;
-
-function moveImg(){
-  let numberOfPixels = width * current;
-
-  if(current === numberOfCards){
-    firstImg.style.marginLeft = "0px";
-    current = 1;
-  } else {
-    firstCard.style.marginLeft = `-${numberOfPixels}px`;
-    current++;
-  }
+  // Close the mobile menu automatically once a link is tapped
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 }
 
-setInterval("moveImg()", 2000);
 
-
-
-
-// Highlight active dot
+// Highlight active dot in the side dot-nav as the user scrolls
 const sections = document.querySelectorAll("section");
 const dotspage = document.querySelectorAll(".dot-nav a");
-window.addEventListener("scroll", () => {
-let current = "";
-sections.forEach(sec => {
-const top = window.scrollY;
-if(top >= sec.offsetTop - window.innerHeight/2){
-    current = sec.getAttribute("id");
+
+function updateActiveDot() {
+  let current = "";
+  sections.forEach(sec => {
+    const top = window.scrollY;
+    if (top >= sec.offsetTop - window.innerHeight / 2) {
+      current = sec.getAttribute("id");
+    }
+  });
+  dotspage.forEach(dot => {
+    dot.classList.remove("active");
+    if (dot.getAttribute("href") === `#${current}`) {
+      dot.classList.add("active");
+    }
+  });
 }
-});
-dotspage.forEach(dot => {
-dot.classList.remove("active");
-if(dot.getAttribute("href") === `#${current}`){
-    dot.classList.add("active");
+window.addEventListener("scroll", updateActiveDot);
+updateActiveDot();
+
+
+// Fade-in-up reveal animation for sections as they enter the viewport
+const revealEls = document.querySelectorAll(".reveal");
+if (revealEls.length) {
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.15,
+    rootMargin: "0px 0px -10% 0px"
+  });
+
+  revealEls.forEach(el => revealObserver.observe(el));
 }
-});
-});
-
-
-
-//Java script for timeline interaction
-const yearDisplay = document.getElementById('yearDisplay');
-const yearDesc = document.getElementById('yearDesc');
-const dots = document.querySelectorAll('.timeline-dot');
-const progress = document.getElementById('timelineProgress');
-const years = document.querySelectorAll('.timeline-year');
-const totalSteps = dots.length - 1;
-
-const observer = new IntersectionObserver((entries) => {
-entries.forEach(entry => {
-if (entry.isIntersecting) {
-const el = entry.target;
-const year = el.dataset.year;
-const text = el.dataset.text;
-const dotId = el.dataset.dot;
-
-yearDisplay.style.opacity = 0;
-yearDesc.style.opacity = 0;
-setTimeout(() => {
-    yearDisplay.textContent = year;
-    yearDesc.textContent = text;
-    yearDisplay.style.opacity = 1;
-    yearDesc.style.opacity = 1;
-}, 200);
-
-dots.forEach(dot => dot.classList.remove('active'));
-document.getElementById(dotId)?.classList.add('active');
-
-const activeIndex = Array.from(dots).findIndex(dot => dot.id === dotId);
-progress.style.width = `${(activeIndex / totalSteps) * 100}%`;
-}
-});
-}, {
-root: null,
-threshold: 0.5,
-rootMargin: "-80px 0px -20% 0px"
-});
-
-years.forEach(y => observer.observe(y));
