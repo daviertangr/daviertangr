@@ -3,37 +3,28 @@ html, body {
     scroll-behavior: smooth;
 }
 
-:root{
-    /* Color Variables — Professional Light Blue & Orange */
-    --heading: #14405E;      /* Deep Slate-Blue header background */
-    --bg: #EAF4FB;           /* Soft Light Blue Background */
-    --card-light: #FFFFFF;   /* Light Card Background */
-    --accent-dark: #16324A;  /* Deep Navy Text */
-    --accent-1: #D9550C;     /* Deep Burnt-Orange (links/CTA emphasis) */
-    --accent-2: #F2884B;     /* Warm Orange Accent (CTA) */
 
-    --card: #0F2A40;         /* Deep Navy Card Background */
-    --muted: #52697D;        /* Sub-text / Slate Gray-Blue */
-    --accent: #2E86AB;       /* Primary Sky-Blue Accent */
-    --glass: rgba(255,255,255,0.08); /* Glass Effect */
-    --highlight: #F2884B;    /* Orange Highlight */
-    --section-1: #DCEEFB;    /* Light Blue Section */
-    --section-2: #FBE7D9;    /* Light Orange Section */
-    
-    /* Typography Variables - CORRECTLY DEFINED */
-    --font-body: 'Raleway', sans-serif;
-    --font-headline: 'Montserrat', sans-serif;
-    --font-mono: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    --weight-headline: 800; /* Extra-bold */
-    --weight-h3:600;
-    --size-h1: clamp(2rem, 5vw, 3.5rem); /* Larger for screen impact, fluid on small screens */
-    --size-h2: 2.5rem;
-    --size-h3: 1.75rem;
-    --text-color: #16324A;   /* Standard Text Color */
-    --radius: 14px;
+:root {
+  /* Neutrals */
+  --bg-page: #F8FAFC;
+  --bg-card: #F1F5F9;
+  --bg-dark: #0F172A;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --border: #E2E8F0;
 
-    --header-height: clamp(50px,10%,80px);
+  /* Accent */
+  --accent: #D97706;
+  --accent-hover: #B45309;
+  --accent-text: #FFFFFF;
 }
+
+/* Quick application */
+body { background: var(--bg-page); color: var(--text-primary); }
+.btn-primary { background: var(--accent); color: var(--accent-text); }
+.btn-primary:hover { background: var(--accent-hover); }
+.card { background: var(--bg-card); border: 1px solid var(--border); }
+.hero, footer { background: var(--bg-dark); color: #FFFFFF; }
 
 
 
