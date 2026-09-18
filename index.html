@@ -1,251 +1,510 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Davier Tan — Portfolio & Resume</title>
-  <meta name="description" content="Portfolio and resume of Davier Tan. Civil Engineer with passion in construction, innovation and problem solving." />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d0f">
+  <meta name="description" content="Davier Tan — Civil Engineer, Project Manager and Construction Digitalisation Specialist.">
+  <title>Davier Tan — Civil Engineer | Construction & Digitalisation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Montserrat:wght@600;700;800&family=Raleway:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <header>
-    <div class="logo">
-      <img src="your-logo.png" alt="Davier Tan logo" loading="eager">
-    </div>
+  <div class="site-noise" aria-hidden="true"></div>
+  <div class="blueprint-grid" aria-hidden="true"></div>
 
-    <!-- Desktop navigation -->
-    <nav class="nav-links">
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#home" aria-label="Davier Tan home">
+      <span class="brand-mark">DT</span>
+      <span class="brand-copy">
+        <strong>DAVIER TAN</strong>
+        <small>CIVIL ENGINEER / PROJECT MANAGEMENT</small>
+      </span>
+    </a>
 
-    <!-- Mobile hamburger -->
-    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
-      <span></span>
-      <span></span>
-      <span></span>
+    <button class="menu-toggle" id="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span><span></span>
     </button>
+
+    <nav class="main-nav" id="main-nav">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#about" data-nav="about">About</a>
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#toolkit" data-nav="toolkit">Toolkit</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </nav>
   </header>
 
-  <!-- Mobile menu (hidden by default) -->
-  <nav class="mobile-menu" id="mobile-menu">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#projects">Projects</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-
-  <!-- Dot nav -->
-  <div class="dot-nav">
-    <a href="#about" data-label="About"></a>
-    <a href="#projects" data-label="Projects"></a>
-    <a href="#resume" data-label="Resume"></a>
-    <a href="#contact" data-label="Contact"></a>
+  <div class="scroll-progress" aria-hidden="true">
+    <div class="progress-track"><span id="progress-fill"></span></div>
+    <span class="progress-label">00—100</span>
   </div>
 
-
-
-  <!-- Sections -->
-
-  <!-- HOME SECTION -->
-  <section id="home">
-    <div class="intro-box">
-      <p id="aboutme"></p>
-    </div>
-  </section>
-
-
-  <!-- ABOUT SECTION -->
-  <section id="about" class="reveal">
-    <h2>About Me</h2>
-    <div class="about-box">
-      <p class="about-bio">
-        I'm Davier, a Civil Engineer with a passion for construction, innovation, and problem-solving.
-        My background spans structural design, BIM coordination, and project management — with an
-        academic focus on industrial digitalisation to bring smarter workflows to the construction site.
-      </p>
-      <div class="about-highlights">
-        <div class="about-highlight">
-          <span class="about-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Structural beam -->
-              <rect x="10" y="26" width="44" height="10" rx="2" fill="var(--accent)"/>
-              <path d="M16 36 V50" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
-              <path d="M48 36 V50" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
-              <path d="M32 36 V50" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <p class="about-highlight-title">Structural Design</p>
+  <main>
+    <!-- HERO -->
+    <section class="hero section-snap" id="home">
+      <div class="hero-drawing" aria-hidden="true">
+        <div class="building">
+          <div class="building-roof"></div>
+          <div class="building-level level-1"></div>
+          <div class="building-level level-2"></div>
+          <div class="building-level level-3"></div>
+          <div class="building-level level-4"></div>
+          <div class="building-level level-5"></div>
+          <div class="building-columns"></div>
+          <div class="building-crane">
+            <span class="crane-mast"></span>
+            <span class="crane-arm"></span>
+            <span class="crane-cable"></span>
+            <span class="crane-hook"></span>
+          </div>
         </div>
-        <div class="about-highlight">
-          <span class="about-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- BIM cube -->
-              <path d="M32 8 L54 20 V44 L32 56 L10 44 V20 Z" stroke="var(--accent-dark)" stroke-width="3" fill="none" stroke-linejoin="round"/>
-              <path d="M32 8 V32 M32 32 L54 20 M32 32 L10 20" stroke="var(--accent-2)" stroke-width="3" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <p class="about-highlight-title">BIM & Digitalisation</p>
+        <div class="drawing-dimension dim-x"><span>38.40 m</span></div>
+        <div class="drawing-dimension dim-y"><span>18.60 m</span></div>
+        <div class="drawing-crosshair crosshair-a"></div>
+        <div class="drawing-crosshair crosshair-b"></div>
+      </div>
+
+      <div class="hero-inner">
+        <div class="hero-kicker">
+          <span class="status-dot"></span>
+          <span>CONSTRUCTION / DIGITAL ENGINEERING</span>
+          <span class="kicker-line"></span>
+          <span>SG · 01</span>
         </div>
-        <div class="about-highlight">
-          <span class="about-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Checklist -->
-              <rect x="14" y="10" width="36" height="44" rx="4" stroke="var(--accent-dark)" stroke-width="3" fill="none"/>
-              <path d="M21 24 L25 28 L33 19" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M38 22 H44" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
-              <path d="M21 40 L25 44 L33 35" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M38 38 H44" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <p class="about-highlight-title">Project Management</p>
+
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow mono">PROJECT ENGINEER // BUILDER // PROBLEM SOLVER</p>
+            <h1>
+              Engineering ideas<br>
+              <span class="outline-text">into reality.</span>
+            </h1>
+            <p class="hero-description">
+              Civil engineer focused on construction, project management and
+              digital workflows — connecting design intent with practical site execution.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#projects">
+                <span>Explore projects</span>
+                <span class="button-arrow">↘</span>
+              </a>
+              <a class="button button-ghost" href="#contact">Start a conversation</a>
+            </div>
+
+            <div class="hero-metrics">
+              <div>
+                <strong data-counter="8">0</strong><span>+</span>
+                <small>YEARS / PROJECT EXPOSURE</small>
+              </div>
+              <div>
+                <strong data-counter="3">0</strong><span>+</span>
+                <small>CORE ENGINEERING DISCIPLINES</small>
+              </div>
+              <div>
+                <strong>SG</strong>
+                <small>BASED IN SINGAPORE</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-coordinate mono">
+            <span>01</span>
+            <span>1.3521° N</span>
+            <span>103.8198° E</span>
+            <span>STRUCTURAL / PM / BIM</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>SCROLL TO INSPECT</span>
+        <i></i>
+      </div>
+    </section>
+
+    <!-- ABOUT / TIMELINE -->
+    <section class="about section-snap" id="about">
+      <div class="section-heading">
+        <div>
+          <p class="section-number mono">02 / PROFILE</p>
+          <h2>Built from the<br><em>ground up.</em></h2>
+        </div>
+        <p class="section-intro">
+          A civil engineering background combined with project management and
+          industrial digitalisation — with a practical focus on getting work built.
+        </p>
+      </div>
+
+      <div class="about-layout">
+        <div class="about-statement">
+          <div class="statement-tag mono">ENGINEER'S NOTE / 001</div>
+          <p>
+            I'm Davier, a Civil Engineer with a passion for construction,
+            innovation and problem-solving.
+          </p>
+          <p class="muted">
+            My work spans structural design, BIM coordination, tendering and
+            project management. I am particularly interested in using digital
+            tools to make construction workflows more coordinated, measurable
+            and efficient.
+          </p>
+
+          <div class="signature">
+            <span class="signature-line"></span>
+            <span>DAVIER TAN</span>
+          </div>
+        </div>
+
+        <div class="timeline-wrap">
+          <div class="timeline-axis" aria-hidden="true">
+            <span class="axis-fill" id="axis-fill"></span>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-item active">
+              <span class="timeline-dot"></span>
+              <span class="timeline-year mono">2016</span>
+              <div>
+                <p class="mono">FOUNDATION</p>
+                <h3>Civil Engineering</h3>
+                <span>Building the technical base — structures, materials, construction and design.</span>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-dot"></span>
+              <span class="timeline-year mono">2020</span>
+              <div>
+                <p class="mono">FIELD</p>
+                <h3>Construction Experience</h3>
+                <span>Moving from drawings and calculations toward practical project delivery.</span>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-dot"></span>
+              <span class="timeline-year mono">2021</span>
+              <div>
+                <p class="mono">DIGITAL</p>
+                <h3>BIM & Coordination</h3>
+                <span>Using digital models and coordinated information to solve site problems earlier.</span>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-dot"></span>
+              <span class="timeline-year mono">2024</span>
+              <div>
+                <p class="mono">MANAGEMENT</p>
+                <h3>Project Management</h3>
+                <span>Taking ownership of programme, coordination, procurement and delivery.</span>
+              </div>
+            </article>
+
+            <article class="timeline-item">
+              <span class="timeline-dot"></span>
+              <span class="timeline-year mono">2026</span>
+              <div>
+                <p class="mono">NEXT PHASE</p>
+                <h3>Build Better</h3>
+                <span>Combining construction experience, digitalisation and entrepreneurship.</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="projects section-snap" id="projects">
+      <div class="section-heading projects-heading">
+        <div>
+          <p class="section-number mono">03 / SELECTED WORK</p>
+          <h2>Projects that<br><em>made an impact.</em></h2>
+        </div>
+        <div class="project-filter mono">
+          <button class="filter-btn active" data-filter="all">ALL</button>
+          <button class="filter-btn" data-filter="structural">STRUCTURAL</button>
+          <button class="filter-btn" data-filter="construction">CONSTRUCTION</button>
+          <button class="filter-btn" data-filter="digital">DIGITAL</button>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card featured" data-category="construction structural">
+          <div class="project-image project-image-warehouse">
+            <div class="image-grid"></div>
+            <div class="project-building-shape"></div>
+            <span class="project-stamp mono">PROJECT / 01</span>
+            <span class="project-image-label mono">WAREHOUSE / STRUCTURE</span>
+            <div class="scan-line"></div>
+          </div>
+          <div class="project-info">
+            <div class="project-topline mono">
+              <span>01</span><span>12 MONTHS</span><span>$40M</span>
+            </div>
+            <h3>Katoen Natie Warehouse</h3>
+            <p>Structural and construction coordination for a major warehouse development.</p>
+            <div class="project-tags">
+              <span>STRUCTURAL</span><span>CONSTRUCTION</span><span>COORDINATION</span>
+            </div>
+            <button class="project-expand" type="button" data-project="warehouse">
+              <span>View project profile</span><b>↗</b>
+            </button>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="construction structural">
+          <div class="project-image project-image-bendemeer">
+            <div class="image-grid"></div>
+            <div class="project-building-shape"></div>
+            <span class="project-stamp mono">PROJECT / 02</span>
+            <span class="project-image-label mono">A&A / EXISTING BUILDING</span>
+            <div class="scan-line"></div>
+          </div>
+          <div class="project-info">
+            <div class="project-topline mono">
+              <span>02</span><span>10 MONTHS</span><span>$25M</span>
+            </div>
+            <h3>A&A at 80 Bendemeer Road</h3>
+            <p>Additions and alterations requiring close coordination between existing and new works.</p>
+            <div class="project-tags">
+              <span>A&A</span><span>STRUCTURAL</span><span>PM</span>
+            </div>
+            <button class="project-expand" type="button" data-project="bendemeer">
+              <span>View project profile</span><b>↗</b>
+            </button>
+          </div>
+        </article>
+
+        <article class="project-card" data-category="construction digital">
+          <div class="project-image project-image-bayshore">
+            <div class="image-grid"></div>
+            <div class="project-building-shape"></div>
+            <span class="project-stamp mono">PROJECT / 03</span>
+            <span class="project-image-label mono">MRT / INFRASTRUCTURE</span>
+            <div class="scan-line"></div>
+          </div>
+          <div class="project-info">
+            <div class="project-topline mono">
+              <span>03</span><span>8 MONTHS</span><span>$15M</span>
+            </div>
+            <h3>T310 Bayshore MRT Station</h3>
+            <p>Project exposure across infrastructure construction, coordination and delivery.</p>
+            <div class="project-tags">
+              <span>INFRA</span><span>COORDINATION</span><span>DIGITAL</span>
+            </div>
+            <button class="project-expand" type="button" data-project="bayshore">
+              <span>View project profile</span><b>↗</b>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <div class="projects-footer mono">
+        <span>MORE PROJECTS / AVAILABLE ON REQUEST</span>
+        <span class="footer-rule"></span>
+        <span>03—03</span>
+      </div>
+    </section>
+
+    <!-- TOOLKIT -->
+    <section class="toolkit section-snap" id="toolkit">
+      <div class="section-heading">
+        <div>
+          <p class="section-number mono">04 / ENGINEERING TOOLKIT</p>
+          <h2>Where design<br><em>meets delivery.</em></h2>
+        </div>
+        <p class="section-intro">
+          A practical toolkit spanning engineering, BIM, project controls and
+          visualisation — selected to support real construction decisions.
+        </p>
+      </div>
+
+      <div class="toolkit-layout">
+        <div class="toolkit-orbit" id="toolkit-orbit">
+          <div class="orbit-ring ring-1"></div>
+          <div class="orbit-ring ring-2"></div>
+          <div class="orbit-ring ring-3"></div>
+          <div class="orbit-core">
+            <span class="mono">BUILD</span>
+            <small>DATA → MODEL → SITE</small>
+          </div>
+
+          <button class="tool-node node-1" data-tool="Revit">REVIT</button>
+          <button class="tool-node node-2" data-tool="Navisworks">NAVISWORKS</button>
+          <button class="tool-node node-3" data-tool="AutoCAD">AUTOCAD</button>
+          <button class="tool-node node-4" data-tool="SAP2000">SAP2000</button>
+          <button class="tool-node node-5" data-tool="MS Project">MS PROJECT</button>
+          <button class="tool-node node-6" data-tool="Excel">EXCEL</button>
+          <button class="tool-node node-7" data-tool="D5 Render">D5 RENDER</button>
+          <button class="tool-node node-8" data-tool="SketchUp">SKETCHUP</button>
+        </div>
+
+        <div class="toolkit-details">
+          <div class="tool-detail active" data-detail="default">
+            <span class="detail-index mono">TOOL / 00</span>
+            <h3>Engineering Toolkit</h3>
+            <p>
+              Hover or tap a tool to inspect the workflow. The aim is not simply
+              to know software — it is to use the right digital tool at the right
+              stage of a project.
+            </p>
+          </div>
+
+          <div class="tool-detail" data-detail="Revit">
+            <span class="detail-index mono">TOOL / 01</span>
+            <h3>Revit</h3><p>BIM modelling and coordinated project information.</p>
+          </div>
+          <div class="tool-detail" data-detail="Navisworks">
+            <span class="detail-index mono">TOOL / 02</span>
+            <h3>Navisworks</h3><p>Model review, coordination and clash-oriented workflows.</p>
+          </div>
+          <div class="tool-detail" data-detail="AutoCAD">
+            <span class="detail-index mono">TOOL / 03</span>
+            <h3>AutoCAD</h3><p>Technical drafting, detailing and drawing coordination.</p>
+          </div>
+          <div class="tool-detail" data-detail="SAP2000">
+            <span class="detail-index mono">TOOL / 04</span>
+            <h3>SAP2000</h3><p>Structural analysis and engineering design workflows.</p>
+          </div>
+          <div class="tool-detail" data-detail="MS Project">
+            <span class="detail-index mono">TOOL / 05</span>
+            <h3>Microsoft Project</h3><p>Programme planning, sequencing and project controls.</p>
+          </div>
+          <div class="tool-detail" data-detail="Excel">
+            <span class="detail-index mono">TOOL / 06</span>
+            <h3>Excel</h3><p>Estimating, data management, analysis and project tracking.</p>
+          </div>
+          <div class="tool-detail" data-detail="D5 Render">
+            <span class="detail-index mono">TOOL / 07</span>
+            <h3>D5 Render</h3><p>Visualisation and presentation of design intent.</p>
+          </div>
+          <div class="tool-detail" data-detail="SketchUp">
+            <span class="detail-index mono">TOOL / 08</span>
+            <h3>SketchUp</h3><p>Fast 3D concept development and spatial communication.</p>
+          </div>
+
+          <div class="skill-bars">
+            <div class="skill"><span>PROJECT MANAGEMENT</span><i><b style="--value:92%"></b></i><strong>92</strong></div>
+            <div class="skill"><span>BIM / DIGITALISATION</span><i><b style="--value:88%"></b></i><strong>88</strong></div>
+            <div class="skill"><span>STRUCTURAL ENGINEERING</span><i><b style="--value:84%"></b></i><strong>84</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolkit-bottom mono">
+        <span>STRUCTURAL DESIGN</span><span>•</span><span>BIM COORDINATION</span><span>•</span>
+        <span>PROJECT MANAGEMENT</span><span>•</span><span>TENDERING</span><span>•</span>
+        <span>CONSTRUCTION</span>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact section-snap" id="contact">
+      <div class="contact-grid">
+        <div class="contact-copy">
+          <p class="section-number mono">05 / PROJECT BRIEF</p>
+          <h2>Let's build<br><em>something solid.</em></h2>
+          <p>
+            Whether it is a construction project, tender opportunity,
+            engineering collaboration or a digital workflow worth improving,
+            I'd be happy to hear about it.
+          </p>
+
+          <div class="contact-details">
+            <a href="mailto:daviertgr+collab@gmail.com">
+              <span class="mono">EMAIL</span>
+              <strong>daviertgr+collab@gmail.com</strong>
+            </a>
+            <div>
+              <span class="mono">LOCATION</span>
+              <strong>Singapore</strong>
+            </div>
+          </div>
+        </div>
+
+        <form class="brief-form" id="brief-form">
+          <div class="form-header">
+            <span class="mono">PROJECT BRIEF / REV. 01</span>
+            <span class="mono">DT—2026</span>
+          </div>
+
+          <label>
+            <span class="mono">01 / YOUR NAME</span>
+            <input type="text" name="name" placeholder="Name" required>
+          </label>
+
+          <label>
+            <span class="mono">02 / EMAIL</span>
+            <input type="email" name="email" placeholder="you@company.com" required>
+          </label>
+
+          <label>
+            <span class="mono">03 / PROJECT TYPE</span>
+            <select name="project">
+              <option>Construction project</option>
+              <option>Engineering / structural</option>
+              <option>BIM / digitalisation</option>
+              <option>Tender / commercial</option>
+              <option>Collaboration</option>
+              <option>Other</option>
+            </select>
+          </label>
+
+          <label>
+            <span class="mono">04 / BRIEF</span>
+            <textarea name="message" rows="4" placeholder="Tell me a little about the project..." required></textarea>
+          </label>
+
+          <button class="button button-primary form-submit" type="submit">
+            <span>Send project brief</span><span>↗</span>
+          </button>
+
+          <p class="form-note mono">This opens your email client with the brief pre-filled.</p>
+          <p class="form-success" id="form-success" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <footer class="site-footer">
+        <span>© <span id="year"></span> DAVIER TAN</span>
+        <span class="footer-center mono">ENGINEER / BUILDER / DIGITALISE</span>
+        <a href="#home">BACK TO TOP ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <!-- PROJECT MODAL -->
+  <div class="project-modal" id="project-modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close project profile">×</button>
+      <div class="modal-drawing" id="modal-drawing">
+        <span class="mono">TECHNICAL PROFILE</span>
+        <div class="modal-building"></div>
+      </div>
+      <div class="modal-content">
+        <p class="mono" id="modal-code">PROJECT / 01</p>
+        <h2 id="modal-title">Project</h2>
+        <p id="modal-description"></p>
+        <div class="modal-stats" id="modal-stats"></div>
+        <div class="modal-note">
+          <span class="mono">ROLE / SCOPE</span>
+          <p id="modal-role"></p>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-
-
-<!-- Projects-->
-  <section id="projects" class="reveal">
-    <h2>Past Projects</h2>
-        <div class="card-container">
-          <div class="card">
-            <img src="images/past-projects/kns.jpg" alt="Katoen Natie Warehouse structural project" loading="lazy" decoding="async" />
-            <div class="card-content">
-              <h3>Katoen Natie Warehouse</h3>
-              <p>In charge of all structural aspects of the project.<br>Duration: 12 months.<br>Project Sum: $40M.</p> 
-            </div>
-          </div>
-          <div class="card">
-            <img src="images/past-projects/80br.jpg" alt="A&amp;A at 80 Bendemeer Road project" loading="lazy" decoding="async" />
-            <div class="card-content">
-              <h3>A&A at 80 Bendemeer Road</h3>
-              <p>Duration: 10 months.<br>Project Sum: $25M.</p>
-            </div>
-        </div>
-        <div class="card">
-            <img src="images/past-projects/wohhup.jpg" alt="T310 Bayshore MRT Station project" loading="lazy" decoding="async" />
-            <div class="card-content">
-              <h3>T310 Bayshore MRT Station</h3>
-              <p>Duration: 8 months.<br>Project Sum: $15M.</p>
-            </div>
-        </div>
-        
-  </section>
-
-
-
-  <section id="resume" class="reveal">
-    <h2>Certifications & Skills</h2>
-    <div class="resume-box">
-      <h3>Certifications</h3>
-      <ul class="cert-list">
-        <li class="cert-item">
-          <span class="cert-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Drafting compass: advanced/master-level design & planning -->
-              <circle cx="32" cy="14" r="4" fill="var(--accent-2)"/>
-              <path d="M32 18 L18 54" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
-              <path d="M32 18 L46 54" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
-              <path d="M22 44 H42" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="18" cy="56" r="3" fill="var(--accent-1)"/>
-              <circle cx="46" cy="56" r="3" fill="var(--accent-1)"/>
-            </svg>
-          </span>
-          <div class="cert-text">
-            <p class="cert-title">Master of Science in Civil Engineering</p>
-            <p class="cert-sub">Industrial Digitalisation and Project Management</p>
-          </div>
-        </li>
-        <li class="cert-item">
-          <span class="cert-icon" aria-hidden="true">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Graduation cap: foundational degree -->
-              <path d="M32 12 L58 24 L32 36 L6 24 Z" fill="var(--accent)"/>
-              <path d="M18 29 V42 C18 46 25 50 32 50 C39 50 46 46 46 42 V29" stroke="var(--accent-dark)" stroke-width="3" fill="none" stroke-linecap="round"/>
-              <path d="M54 24 V38" stroke="var(--accent-2)" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="54" cy="41" r="3" fill="var(--accent-2)"/>
-            </svg>
-          </span>
-          <div class="cert-text">
-            <p class="cert-title">Bachelor of Civil Engineering</p>
-            <p class="cert-sub">Distinction</p>
-          </div>
-        </li>
-      </ul>
-
-      <h3 class="skills-heading">Skills & Software</h3>
-      <div class="skills-groups">
-        <div class="skill-group">
-          <p class="skill-group-label">Microsoft Office</p>
-          <ul class="skill-tags">
-            <li>Project</li>
-            <li>Excel</li>
-            <li>PowerPoint</li>
-            <li>Word</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group-label">BIM & Coordination</p>
-          <ul class="skill-tags">
-            <li>Revit</li>
-            <li>Navisworks Manage</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group-label">Drafting</p>
-          <ul class="skill-tags">
-            <li>AutoCAD</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group-label">Structural Analysis</p>
-          <ul class="skill-tags">
-            <li>SAP2000</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group-label">Visualization</p>
-          <ul class="skill-tags">
-            <li>D5 Render</li>
-            <li>SketchUp</li>
-          </ul>
-        </div>
-        <div class="skill-group">
-          <p class="skill-group-label">Design & Modeling</p>
-          <ul class="skill-tags">
-            <li>Fusion 360</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
-  <section id="contact" class="reveal">
-    <h2>Contact Me</h2>
-    <p>Leave me an email if you would like to explore opportunities or have a deeper chat.</p>
-    <p><a href="mailto:daviercfar+collab@gmail.com">daviertgr+collab@gmail.com</a></p>
-    <footer>
-      © <span id="year"></span> Davier Tan — Built with passion for construction and learning experiences.
-    </footer>
-  </section>
-
+  <div class="cursor-measure" id="cursor-measure" aria-hidden="true">
+    <span></span><i></i>
+  </div>
 
   <script src="script.js"></script>
-
 </body>
 </html>
