@@ -1,1513 +1,397 @@
+/* =========================================================
+   DAVIER TAN — INTERACTIONS
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
-
-  /* =========================================================
-     GLOBAL ELEMENTS
-     ========================================================= */
-
   const body = document.body;
-
+  const header = document.getElementById("site-header");
   const nav = document.getElementById("main-nav");
-  const menu = document.getElementById("menu-toggle");
-  const progress = document.getElementById("progress-fill");
+  const menuToggle = document.getElementById("menu-toggle");
+  const progressFill = document.getElementById("progress-fill");
+  const year = document.getElementById("year");
   const cursor = document.getElementById("cursor-measure");
 
-  const yearElement = document.getElementById("year");
+  if (year) year.textContent = new Date().getFullYear();
 
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
-
-
-  /* =========================================================
-     MOBILE NAVIGATION
-     ========================================================= */
-
-  menu?.addEventListener("click", () => {
-
+  /* ---------------------------------------------------------
+     Mobile navigation
+     --------------------------------------------------------- */
+  menuToggle?.addEventListener("click", () => {
     const open = nav.classList.toggle("open");
-
-    menu.classList.toggle("open", open);
-
-    menu.setAttribute(
-      "aria-expanded",
-      String(open)
-    );
-
+    menuToggle.classList.toggle("open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
   });
-
 
   nav?.querySelectorAll("a").forEach(link => {
-
     link.addEventListener("click", () => {
-
       nav.classList.remove("open");
-
-      menu?.classList.remove("open");
-
-      menu?.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
+      menuToggle?.classList.remove("open");
+      menuToggle?.setAttribute("aria-expanded", "false");
     });
-
   });
 
-
-  /* =========================================================
-     SCROLL PROGRESS
-     ========================================================= */
-
-  const sections = [
-    ...document.querySelectorAll("main section")
-  ];
-
-  const navLinks = [
-    ...document.querySelectorAll(".main-nav a")
-  ];
-
-  const timelineItems = [
-    ...document.querySelectorAll(".timeline-item")
-  ];
-
-  const axisFill =
-    document.getElementById("axis-fill");
-
+  /* ---------------------------------------------------------
+     Scroll progress + active navigation + timeline
+     --------------------------------------------------------- */
+  const sections = [...document.querySelectorAll("main section")];
+  const navLinks = [...document.querySelectorAll(".main-nav a")];
+  const timelineItems = [...document.querySelectorAll(".timeline-item")];
+  const axisFill = document.getElementById("axis-fill");
 
   function updateScrollUI() {
+    const scrollTop = window.scrollY;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = scrollHeight > 0 ? scrollTop / scrollHeight : 0;
 
-    const maxScroll =
-      document.documentElement.scrollHeight -
-      window.innerHeight;
-
-    const scrollProgress =
-      maxScroll > 0
-        ? window.scrollY / maxScroll
-        : 0;
-
-    if (progress) {
-
-      progress.style.height =
-        `${scrollProgress * 100}%`;
-
-    }
-
-
-    /* ---------------------------------------------------------
-       ACTIVE NAVIGATION
-       --------------------------------------------------------- */
+    if (progressFill) progressFill.style.height = `${progress * 100}%`;
 
     let activeSection = sections[0];
-
-    let closestDistance = Infinity;
-
+    let closest = Infinity;
 
     sections.forEach(section => {
-
-      const distance =
-        Math.abs(
-          section.getBoundingClientRect().top
-        );
-
-      if (distance < closestDistance) {
-
-        closestDistance = distance;
-
+      const distance = Math.abs(section.getBoundingClientRect().top);
+      if (distance < closest) {
+        closest = distance;
         activeSection = section;
-
       }
-
     });
-
 
     navLinks.forEach(link => {
-
-      link.classList.toggle(
-        "active",
-        link.dataset.nav === activeSection?.id
-      );
-
+      link.classList.toggle("active", link.dataset.nav === activeSection?.id);
     });
 
-
-    /* ---------------------------------------------------------
-       TIMELINE
-       --------------------------------------------------------- */
-
-    const about =
-      document.getElementById("about");
-
-
+    /* Timeline becomes progressively "constructed" as About is viewed. */
+    const about = document.getElementById("about");
     if (about && timelineItems.length) {
-
-      const rect =
-        about.getBoundingClientRect();
-
-
-      const timelineProgress =
-        Math.max(
-          0,
-          Math.min(
-            1,
-            (
-              window.innerHeight * 0.72 -
-              rect.top
-            ) /
-            (rect.height * 0.72)
-          )
-        );
-
-
-      const activeIndex =
-        Math.min(
-          timelineItems.length - 1,
-          Math.max(
-            0,
-            Math.floor(
-              timelineProgress *
-              timelineItems.length
-            )
-          )
-        );
-
-
-      timelineItems.forEach(
-        (item, index) => {
-
-          item.classList.toggle(
-            "active",
-            index <= activeIndex
-          );
-
-        }
+      const rect = about.getBoundingClientRect();
+      const view = Math.min(
+        1,
+        Math.max(0, (window.innerHeight * 0.72 - rect.top) / (rect.height * 0.72))
       );
 
+      const activeIndex = Math.min(
+        timelineItems.length - 1,
+        Math.max(0, Math.floor(view * timelineItems.length))
+      );
+
+      timelineItems.forEach((item, index) => {
+        item.classList.toggle("active", index <= activeIndex);
+      });
 
       if (axisFill) {
-
-        axisFill.style.height =
-          `${timelineProgress * 100}%`;
-
+        axisFill.style.height = `${Math.min(100, view * 100)}%`;
       }
-
     }
-
   }
 
-
-  window.addEventListener(
-    "scroll",
-    updateScrollUI,
-    {
-      passive: true
+  let scrollTick = false;
+  window.addEventListener("scroll", () => {
+    if (!scrollTick) {
+      window.requestAnimationFrame(() => {
+        updateScrollUI();
+        scrollTick = false;
+      });
+      scrollTick = true;
     }
-  );
-
+  }, { passive: true });
 
   updateScrollUI();
 
-
-  /* =========================================================
-     HERO MOUSE PARALLAX
-     ========================================================= */
-
-  const hero =
-    document.querySelector(".hero");
-
-
-  if (
-    hero &&
-    window.matchMedia(
-      "(hover:hover) and (pointer:fine)"
-    ).matches
-  ) {
-
-    hero.addEventListener(
-      "pointermove",
-      event => {
-
-        const rect =
-          hero.getBoundingClientRect();
-
-
-        const x =
-          (event.clientX - rect.left) /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (event.clientY - rect.top) /
-          rect.height -
-          0.5;
-
-
-        hero.style.setProperty(
-          "--mx",
-          `${x * -18}px`
-        );
-
-
-        hero.style.setProperty(
-          "--my",
-          `${y * -12}px`
-        );
-
-      }
-    );
-
-
-    hero.addEventListener(
-      "pointerleave",
-      () => {
-
-        hero.style.setProperty(
-          "--mx",
-          "0px"
-        );
-
-        hero.style.setProperty(
-          "--my",
-          "0px"
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     CUSTOM ENGINEERING CURSOR
-     ========================================================= */
-
-  if (
-    cursor &&
-    window.matchMedia(
-      "(hover:hover) and (pointer:fine)"
-    ).matches
-  ) {
-
-    window.addEventListener(
-      "pointermove",
-      event => {
-
-        cursor.style.left =
-          `${event.clientX}px`;
-
-        cursor.style.top =
-          `${event.clientY}px`;
-
-      }
-    );
-
-
-    document
-      .querySelectorAll(
-        "a, button, input, select, textarea"
-      )
-      .forEach(element => {
-
-        element.addEventListener(
-          "mouseenter",
-          () => {
-
-            cursor.classList.add(
-              "cursor-hover"
-            );
-
-          }
-        );
-
-
-        element.addEventListener(
-          "mouseleave",
-          () => {
-
-            cursor.classList.remove(
-              "cursor-hover"
-            );
-
-          }
-        );
-
-      });
-
-  }
-
-
-  /* =========================================================
-     COUNTER ANIMATION
-     ========================================================= */
-
-  const counters =
-    document.querySelectorAll(
-      "[data-counter]"
-    );
-
-
-  const counterObserver =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (
-            entry.isIntersecting &&
-            !entry.target.dataset.done
-          ) {
-
-            entry.target.dataset.done =
-              "true";
-
-
-            const target =
-              Number(
-                entry.target.dataset.counter
-              );
-
-
-            const start =
-              performance.now();
-
-
-            const duration =
-              900;
-
-
-            function animateCounter(now) {
-
-              const progress =
-                Math.min(
-                  1,
-                  (now - start) /
-                  duration
-                );
-
-
-              const eased =
-                1 -
-                Math.pow(
-                  1 - progress,
-                  3
-                );
-
-
-              entry.target.textContent =
-                Math.round(
-                  target * eased
-                );
-
-
-              if (progress < 1) {
-
-                requestAnimationFrame(
-                  animateCounter
-                );
-
-              }
-
-            }
-
-
-            requestAnimationFrame(
-              animateCounter
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.6
-      }
-    );
-
-
-  counters.forEach(
-    counter =>
-      counterObserver.observe(counter)
-  );
-
-
-  /* =========================================================
-     REVEAL ANIMATIONS
-     ========================================================= */
-
-  const revealElements = [
-    ...document.querySelectorAll(
-      ".section-heading, " +
-      ".timeline-item, " +
-      ".project-card, " +
-      ".toolkit-details, " +
-      ".contact-copy, " +
-      ".brief-form"
-    )
-  ];
-
-
-  revealElements.forEach(
-    element =>
-      element.classList.add("reveal")
-  );
-
-
-  const revealObserver =
-    new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-
-            entry.target.classList.add(
-              "visible"
-            );
-
-
-            revealObserver.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.08
-      }
-    );
-
-
-  revealElements.forEach(
-    element =>
-      revealObserver.observe(element)
-  );
-
-
-  /* =========================================================
-     =========================================================
-        TOWER CRANE PROJECT INTERACTION
-     =========================================================
-     ========================================================= */
-
-  const craneStage =
-    document.getElementById(
-      "crane-stage"
-    );
-
-
-  const projectCards = [
-    ...document.querySelectorAll(
-      ".project-card"
-    )
-  ];
-
-
-  const craneBoom =
-    document.getElementById(
-      "crane-boom"
-    );
-
-
-  const craneTrolley =
-    document.getElementById(
-      "crane-trolley"
-    );
-
-
-  const craneCable =
-    document.getElementById(
-      "crane-cable"
-    );
-
-
-  const craneStatus =
-    document.getElementById(
-      "crane-status"
-    );
-
-
-  let selectedCard = null;
-
-  let craneIsLifting = false;
-
-
   /* ---------------------------------------------------------
-     Move crane to selected card
+     Hero mouse parallax / construction drawing
      --------------------------------------------------------- */
-
-  function moveCraneToCard(card) {
-
-    if (
-      !craneStage ||
-      craneIsLifting
-    ) {
-      return;
-    }
-
-
-    const stageRect =
-      craneStage.getBoundingClientRect();
-
-
-    const cardRect =
-      card.getBoundingClientRect();
-
-
-    const cardCenter =
-      cardRect.left +
-      cardRect.width / 2 -
-      stageRect.left;
-
-
-    const trolleyX =
-      Math.max(
-        90,
-        Math.min(
-          stageRect.width * 0.84,
-          cardCenter
-        )
-      );
-
-
-    const craneBaseX =
-      stageRect.width * 0.11;
-
-
-    const distance =
-      trolleyX -
-      craneBaseX;
-
-
-    const angle =
-      Math.max(
-        -7,
-        Math.min(
-          7,
-          Math.atan2(
-            cardRect.top -
-              stageRect.top -
-              35,
-            distance
-          ) *
-          180 /
-          Math.PI *
-          0.15
-        )
-      );
-
-
-    craneTrolley.style.left =
-      `${trolleyX}px`;
-
-
-    craneCable.style.left =
-      `${trolleyX + 6}px`;
-
-
-    craneCable.style.height =
-      `${Math.max(
-        130,
-        cardRect.top -
-          stageRect.top -
-          45
-      )}px`;
-
-
-    craneBoom.style.transform =
-      `rotate(${angle}deg)`;
-
-
-    const projectNumber =
-      String(
-        projectCards.indexOf(card) + 1
-      ).padStart(2, "0");
-
-
-    craneStatus.textContent =
-      `CRANE / LOAD ${projectNumber}`;
-
-  }
-
-
-  /* ---------------------------------------------------------
-     Project hover / focus
-     --------------------------------------------------------- */
-
-  projectCards.forEach(card => {
-
-    card.addEventListener(
-      "pointerenter",
-      () => {
-
-        if (!craneIsLifting) {
-
-          moveCraneToCard(card);
-
-        }
-
-      }
-    );
-
-
-    card.addEventListener(
-      "focus",
-      () => {
-
-        if (!craneIsLifting) {
-
-          moveCraneToCard(card);
-
-        }
-
-      }
-    );
-
-
-    card.addEventListener(
-      "click",
-      () => {
-
-        liftProject(card);
-
-      }
-    );
-
-  });
-
-
-  /* ---------------------------------------------------------
-     Mouse movement across crane stage
-     --------------------------------------------------------- */
-
-  craneStage?.addEventListener(
-    "pointermove",
-    event => {
-
-      if (craneIsLifting) {
-        return;
-      }
-
-
-      const stageRect =
-        craneStage.getBoundingClientRect();
-
-
-      const mouseX =
-        (
-          event.clientX -
-          stageRect.left
-        ) /
-        stageRect.width;
-
-
-      const clampedX =
-        Math.max(
-          0.12,
-          Math.min(
-            0.88,
-            mouseX
-          )
-        );
-
-
-      const trolleyX =
-        clampedX *
-        stageRect.width;
-
-
-      craneTrolley.style.left =
-        `${trolleyX}px`;
-
-
-      craneCable.style.left =
-        `${trolleyX + 6}px`;
-
-
-      const boomRotation =
-        (clampedX - 0.5) * 6;
-
-
-      craneBoom.style.transform =
-        `rotate(${boomRotation}deg)`;
-
-    }
-  );
-
-
-  craneStage?.addEventListener(
-    "pointerleave",
-    () => {
-
-      if (!craneIsLifting) {
-
-        craneStatus.textContent =
-          "CRANE / STANDBY";
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     PROJECT MODAL
-     ========================================================= */
-
-  const modal =
-    document.getElementById(
-      "project-modal"
-    );
-
-
-  const modalTitle =
-    document.getElementById(
-      "modal-title"
-    );
-
-
-  const modalDescription =
-    document.getElementById(
-      "modal-description"
-    );
-
-
-  const modalCode =
-    document.getElementById(
-      "modal-code"
-    );
-
-
-  const modalStats =
-    document.getElementById(
-      "modal-stats"
-    );
-
-
-  const modalRole =
-    document.getElementById(
-      "modal-role"
-    );
-
-
-  /* ---------------------------------------------------------
-     Project information
-     --------------------------------------------------------- */
-
-  const projectData = {
-
-    warehouse: {
-
-      code: "PROJECT / 01",
-
-      title:
-        "Katoen Natie Warehouse",
-
-      description:
-        "A major warehouse project involving structural and construction coordination, with focus on translating engineering requirements into buildable site outcomes.",
-
-      stats: [
-
-        [
-          "DURATION",
-          "12 months"
-        ],
-
-        [
-          "PROJECT",
-          "$40M"
-        ],
-
-        [
-          "TYPE",
-          "Warehouse"
-        ]
-
-      ],
-
-      role:
-        "Structural aspects, project coordination and construction delivery support."
-
-    },
-
-
-    bendemeer: {
-
-      code: "PROJECT / 02",
-
-      title:
-        "A&A at 80 Bendemeer Road",
-
-      description:
-        "An additions and alterations project requiring careful coordination between existing conditions, new works and construction sequencing.",
-
-      stats: [
-
-        [
-          "DURATION",
-          "10 months"
-        ],
-
-        [
-          "PROJECT",
-          "$25M"
-        ],
-
-        [
-          "TYPE",
-          "A&A"
-        ]
-
-      ],
-
-      role:
-        "Project management, coordination and structural/construction interface."
-
-    },
-
-
-    bayshore: {
-
-      code: "PROJECT / 03",
-
-      title:
-        "T310 Bayshore MRT Station",
-
-      description:
-        "Infrastructure project exposure involving construction coordination and delivery within a technically complex MRT environment.",
-
-      stats: [
-
-        [
-          "DURATION",
-          "8 months"
-        ],
-
-        [
-          "PROJECT",
-          "$15M"
-        ],
-
-        [
-          "TYPE",
-          "MRT"
-        ]
-
-      ],
-
-      role:
-        "Construction coordination, project delivery and digital workflow exposure."
-
-    }
-
-  };
-
-
-  /* =========================================================
-     OPEN PROJECT MODAL
-     ========================================================= */
-
-  function openProjectModal(
-    projectKey
-  ) {
-
-    const project =
-      projectData[projectKey];
-
-
-    if (
-      !project ||
-      !modal
-    ) {
-      return;
-    }
-
-
-    modalCode.textContent =
-      project.code;
-
-
-    modalTitle.textContent =
-      project.title;
-
-
-    modalDescription.textContent =
-      project.description;
-
-
-    modalRole.textContent =
-      project.role;
-
-
-    modalStats.innerHTML =
-      project.stats
-        .map(
-          stat => `
-            <div class="modal-stat">
-
-              <small class="mono">
-                ${stat[0]}
-              </small>
-
-              <strong>
-                ${stat[1]}
-              </strong>
-
-            </div>
-          `
-        )
-        .join("");
-
-
-    modal.classList.add("open");
-
-
-    modal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-
-    body.classList.add(
-      "modal-open"
-    );
-
-  }
-
-
-  /* =========================================================
-     CLOSE PROJECT MODAL
-     ========================================================= */
-
-  function closeProjectModal() {
-
-    if (!modal) {
-      return;
-    }
-
-
-    modal.classList.remove(
-      "open"
-    );
-
-
-    modal.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-
-    body.classList.remove(
-      "modal-open"
-    );
-
-
-    craneIsLifting =
-      false;
-
-
-    projectCards.forEach(
-      card => {
-
-        card.classList.remove(
-          "is-lifted"
-        );
-
-
-        card.classList.remove(
-          "is-hooked"
-        );
-
-
-        card.style.removeProperty(
-          "transform"
-        );
-
-
-        card.style.removeProperty(
-          "opacity"
-        );
-
-      }
-    );
-
-
-    craneStatus.textContent =
-      "CRANE / STANDBY";
-
-
-    craneCable.style.height =
-      "200px";
-
-  }
-
-
-  /* =========================================================
-     LIFT PROJECT
-     ========================================================= */
-
-  function liftProject(card) {
-
-    if (
-      craneIsLifting ||
-      !craneStage
-    ) {
-      return;
-    }
-
-
-    craneIsLifting =
-      true;
-
-
-    selectedCard =
-      card;
-
-
-    const stageRect =
-      craneStage.getBoundingClientRect();
-
-
-    const cardRect =
-      card.getBoundingClientRect();
-
-
-    const cardCenter =
-      cardRect.left +
-      cardRect.width / 2 -
-      stageRect.left;
-
-
-    /* ---------------------------------------------------------
-       Move crane directly above project
-       --------------------------------------------------------- */
-
-    craneTrolley.style.left =
-      `${cardCenter}px`;
-
-
-    craneCable.style.left =
-      `${cardCenter + 6}px`;
-
-
-    craneCable.style.height =
-      `${Math.max(
-        80,
-        cardRect.top -
-          stageRect.top -
-          45
-      )}px`;
-
-
-    card.classList.add(
-      "is-hooked"
-    );
-
-
-    craneStatus.textContent =
-      "CRANE / HOOK ENGAGED";
-
-
-    /* ---------------------------------------------------------
-       Small delay before lifting
-       --------------------------------------------------------- */
-
-    setTimeout(
-      () => {
-
-        card.classList.add(
-          "is-lifted"
-        );
-
-
-        const horizontalMovement =
-          stageRect.width / 2 -
-          cardCenter;
-
-
-        const verticalMovement =
-          -(
-            cardRect.top -
-            stageRect.top
-          ) -
-          cardRect.height -
-          55;
-
-
-        card.style.transform =
-          `
-            translate(
-              ${horizontalMovement}px,
-              ${verticalMovement}px
-            )
-            rotate(-2deg)
-            scale(.92)
-          `;
-
-
-        craneCable.style.height =
-          "55px";
-
-
-        craneStatus.textContent =
-          "CRANE / LIFTING";
-
-      },
-      180
-    );
-
-
-    /* ---------------------------------------------------------
-       Open project information
-       --------------------------------------------------------- */
-
-    setTimeout(
-      () => {
-
-        card.style.opacity =
-          "0";
-
-
-        craneStatus.textContent =
-          "CRANE / LOAD SECURED";
-
-
-        openProjectModal(
-          card.dataset.project
-        );
-
-      },
-      1050
-    );
-
-  }
-
-
-  /* =========================================================
-     MODAL EVENTS
-     ========================================================= */
-
-  document
-    .querySelectorAll(
-      "[data-close-modal]"
-    )
-    .forEach(element => {
-
-      element.addEventListener(
-        "click",
-        event => {
-
-          /*
-             If the user clicks the
-             "Discuss a Project" button,
-             close the modal first.
-          */
-
-          closeProjectModal();
-
-        }
-      );
-
+  const hero = document.querySelector(".hero");
+
+  if (hero && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    hero.addEventListener("pointermove", event => {
+      const rect = hero.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+
+      hero.style.setProperty("--mx", `${x * -18}px`);
+      hero.style.setProperty("--my", `${y * -12}px`);
     });
 
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      if (
-        event.key === "Escape" &&
-        modal?.classList.contains("open")
-      ) {
-
-        closeProjectModal();
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     TOOLKIT INTERACTION
-     ========================================================= */
-
-  const orbit =
-    document.getElementById(
-      "toolkit-orbit"
-    );
-
-
-  const toolNodes =
-    document.querySelectorAll(
-      ".tool-node"
-    );
-
-
-  const toolDetails =
-    document.querySelectorAll(
-      ".tool-detail"
-    );
-
-
-  function activateTool(
-    toolName
-  ) {
-
-    toolNodes.forEach(
-      node => {
-
-        node.classList.toggle(
-          "active",
-          node.dataset.tool ===
-          toolName
-        );
-
-      }
-    );
-
-
-    toolDetails.forEach(
-      detail => {
-
-        detail.classList.toggle(
-          "active",
-          detail.dataset.detail ===
-          toolName
-        );
-
-      }
-    );
-
+    hero.addEventListener("pointerleave", () => {
+      hero.style.setProperty("--mx", "0px");
+      hero.style.setProperty("--my", "0px");
+    });
   }
 
+  /* ---------------------------------------------------------
+     Cursor construction crosshair
+     --------------------------------------------------------- */
+  if (cursor && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    window.addEventListener("pointermove", event => {
+      cursor.style.left = `${event.clientX}px`;
+      cursor.style.top = `${event.clientY}px`;
+    });
 
-  toolNodes.forEach(
-    node => {
-
-      node.addEventListener(
-        "mouseenter",
-        () => {
-
-          activateTool(
-            node.dataset.tool
-          );
-
-        }
-      );
-
-
-      node.addEventListener(
-        "focus",
-        () => {
-
-          activateTool(
-            node.dataset.tool
-          );
-
-        }
-      );
-
-
-      node.addEventListener(
-        "click",
-        () => {
-
-          activateTool(
-            node.dataset.tool
-          );
-
-        }
-      );
-
-    }
-  );
-
+    document.querySelectorAll("a, button, input, select, textarea").forEach(el => {
+      el.addEventListener("mouseenter", () => cursor.classList.add("cursor-hover"));
+      el.addEventListener("mouseleave", () => cursor.classList.remove("cursor-hover"));
+    });
+  }
 
   /* ---------------------------------------------------------
-     Toolkit mouse parallax
+     Counter animation
      --------------------------------------------------------- */
+  const counters = document.querySelectorAll("[data-counter]");
 
-  orbit?.addEventListener(
-    "pointermove",
-    event => {
+  function animateCounter(element) {
+    const target = Number(element.dataset.counter);
+    const duration = 900;
+    const start = performance.now();
 
-      const rect =
-        orbit.getBoundingClientRect();
+    function tick(now) {
+      const elapsed = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - elapsed, 3);
+      element.textContent = Math.round(target * eased);
 
-
-      const x =
-        (
-          event.clientX -
-          rect.left
-        ) /
-        rect.width -
-        0.5;
-
-
-      const y =
-        (
-          event.clientY -
-          rect.top
-        ) /
-        rect.height -
-        0.5;
-
-
-      orbit.style.setProperty(
-        "--orbit-rotation",
-        `${x * 4 - y * 2}deg`
-      );
-
+      if (elapsed < 1) requestAnimationFrame(tick);
     }
-  );
 
+    requestAnimationFrame(tick);
+  }
 
-  /* =========================================================
-     CONTACT FORM
-     ========================================================= */
+  const counterObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !entry.target.dataset.animated) {
+        entry.target.dataset.animated = "true";
+        animateCounter(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
 
-  const contactForm =
-    document.getElementById(
-      "brief-form"
-    );
+  counters.forEach(counter => counterObserver.observe(counter));
 
+  /* ---------------------------------------------------------
+     Reveal-on-scroll utility
+     --------------------------------------------------------- */
+  const revealTargets = [
+    ".section-heading",
+    ".about-statement",
+    ".timeline-item",
+    ".project-card",
+    ".toolkit-details",
+    ".contact-copy",
+    ".brief-form"
+  ];
 
-  const formSuccess =
-    document.getElementById(
-      "form-success"
-    );
+  const revealElements = document.querySelectorAll(revealTargets.join(","));
+  revealElements.forEach(el => el.classList.add("reveal"));
 
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
 
-  contactForm?.addEventListener(
-    "submit",
-    event => {
+  revealElements.forEach(el => revealObserver.observe(el));
+
+  /* ---------------------------------------------------------
+     Project filtering
+     --------------------------------------------------------- */
+  const filterButtons = document.querySelectorAll(".filter-btn");
+  const projectCards = document.querySelectorAll(".project-card");
+
+  filterButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
+
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      projectCards.forEach(card => {
+        const categories = card.dataset.category?.split(" ") || [];
+        const show = filter === "all" || categories.includes(filter);
+
+        card.classList.toggle("is-hidden", !show);
+      });
+    });
+  });
+
+  /* ---------------------------------------------------------
+     Toolkit interactive nodes
+     --------------------------------------------------------- */
+  const toolNodes = document.querySelectorAll(".tool-node");
+  const toolDetails = document.querySelectorAll(".tool-detail");
+
+  function activateTool(name) {
+    toolNodes.forEach(node => {
+      node.classList.toggle("active", node.dataset.tool === name);
+    });
+
+    toolDetails.forEach(detail => {
+      detail.classList.toggle("active", detail.dataset.detail === name);
+    });
+  }
+
+  toolNodes.forEach(node => {
+    node.addEventListener("mouseenter", () => activateTool(node.dataset.tool));
+    node.addEventListener("focus", () => activateTool(node.dataset.tool));
+    node.addEventListener("click", () => activateTool(node.dataset.tool));
+  });
+
+  const orbit = document.getElementById("toolkit-orbit");
+
+  if (orbit && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    orbit.addEventListener("pointermove", event => {
+      const rect = orbit.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      orbit.style.setProperty("--orbit-rotation", `${x * 4 - y * 2}deg`);
+    });
+
+    orbit.addEventListener("pointerleave", () => {
+      orbit.style.setProperty("--orbit-rotation", "0deg");
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Project modal
+     --------------------------------------------------------- */
+  const modal = document.getElementById("project-modal");
+  const modalTitle = document.getElementById("modal-title");
+  const modalDescription = document.getElementById("modal-description");
+  const modalCode = document.getElementById("modal-code");
+  const modalStats = document.getElementById("modal-stats");
+  const modalRole = document.getElementById("modal-role");
+
+  const projectData = {
+    warehouse: {
+      code: "PROJECT / 01",
+      title: "Katoen Natie Warehouse",
+      description: "A major warehouse project involving structural and construction coordination, with focus on translating engineering requirements into buildable site outcomes.",
+      stats: [
+        ["DURATION", "12 months"],
+        ["PROJECT", "$40M"],
+        ["TYPE", "Warehouse"]
+      ],
+      role: "Structural aspects, project coordination and construction delivery support."
+    },
+    bendemeer: {
+      code: "PROJECT / 02",
+      title: "A&A at 80 Bendemeer Road",
+      description: "An additions and alterations project requiring careful coordination between existing conditions, new works and construction sequencing.",
+      stats: [
+        ["DURATION", "10 months"],
+        ["PROJECT", "$25M"],
+        ["TYPE", "A&A"]
+      ],
+      role: "Project management, coordination and structural/construction interface."
+    },
+    bayshore: {
+      code: "PROJECT / 03",
+      title: "T310 Bayshore MRT Station",
+      description: "Infrastructure project exposure involving construction coordination and delivery within a technically complex MRT environment.",
+      stats: [
+        ["DURATION", "8 months"],
+        ["PROJECT", "$15M"],
+        ["TYPE", "MRT"]
+      ],
+      role: "Construction coordination, project delivery and digital workflow exposure."
+    }
+  };
+
+  function openProject(key) {
+    const data = projectData[key];
+    if (!data || !modal) return;
+
+    modalCode.textContent = data.code;
+    modalTitle.textContent = data.title;
+    modalDescription.textContent = data.description;
+    modalRole.textContent = data.role;
+
+    modalStats.innerHTML = data.stats.map(stat => `
+      <div class="modal-stat">
+        <small class="mono">${stat[0]}</small>
+        <strong>${stat[1]}</strong>
+      </div>
+    `).join("");
+
+    modal.classList.add("open");
+    modal.setAttribute("aria-hidden", "false");
+    body.classList.add("modal-open");
+  }
+
+  function closeProject() {
+    if (!modal) return;
+    modal.classList.remove("open");
+    modal.setAttribute("aria-hidden", "true");
+    body.classList.remove("modal-open");
+  }
+
+  document.querySelectorAll(".project-expand").forEach(button => {
+    button.addEventListener("click", () => openProject(button.dataset.project));
+  });
+
+  document.querySelectorAll("[data-close-modal]").forEach(el => {
+    el.addEventListener("click", closeProject);
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeProject();
+  });
+
+  /* ---------------------------------------------------------
+     Contact form → mailto
+     --------------------------------------------------------- */
+  const form = document.getElementById("brief-form");
+  const formSuccess = document.getElementById("form-success");
+
+  form?.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const data = new FormData(form);
+    const name = data.get("name");
+    const email = data.get("email");
+    const project = data.get("project");
+    const message = data.get("message");
+
+    const subject = encodeURIComponent(`Project enquiry — ${project}`);
+    const bodyText = [
+      `Hi Davier,`,
+      ``,
+      `Name: ${name}`,
+      `Email: ${email}`,
+      `Project type: ${project}`,
+      ``,
+      `Brief:`,
+      `${message}`,
+      ``,
+      `Sent from daviertangr.github.io portfolio.`
+    ].join("\n");
+
+    window.location.href =
+      `mailto:daviertgr+collab@gmail.com?subject=${subject}&body=${encodeURIComponent(bodyText)}`;
+
+    if (formSuccess) {
+      formSuccess.textContent = "Opening your email client…";
+    }
+  });
+
+  /* ---------------------------------------------------------
+     Smooth anchor fallback for fixed header
+     --------------------------------------------------------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", event => {
+      const id = anchor.getAttribute("href");
+      const target = document.querySelector(id);
+
+      if (!target) return;
 
       event.preventDefault();
 
+      const y = target.getBoundingClientRect().top + window.scrollY - 4;
 
-      const formData =
-        new FormData(
-          contactForm
-        );
-
-
-      const name =
-        formData.get("name");
-
-
-      const email =
-        formData.get("email");
-
-
-      const project =
-        formData.get("project");
-
-
-      const message =
-        formData.get("message");
-
-
-      const subject =
-        encodeURIComponent(
-          `Project enquiry — ${project}`
-        );
-
-
-      const emailBody = [
-
-        "Hi Davier,",
-
-        "",
-
-        `Name: ${name}`,
-
-        `Email: ${email}`,
-
-        `Project type: ${project}`,
-
-        "",
-
-        "Brief:",
-
-        message,
-
-        "",
-
-        "Sent from daviertangr.github.io portfolio."
-
-      ].join("\n");
-
-
-      window.location.href =
-        `mailto:daviertgr+collab@gmail.com` +
-        `?subject=${subject}` +
-        `&body=${encodeURIComponent(
-          emailBody
-        )}`;
-
-
-      if (formSuccess) {
-
-        formSuccess.textContent =
-          "Opening your email client…";
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     SMOOTH ANCHOR SCROLL
-     ========================================================= */
-
-  document
-    .querySelectorAll(
-      'a[href^="#"]'
-    )
-    .forEach(anchor => {
-
-      anchor.addEventListener(
-        "click",
-        event => {
-
-          const target =
-            document.querySelector(
-              anchor.getAttribute("href")
-            );
-
-
-          if (!target) {
-            return;
-          }
-
-
-          event.preventDefault();
-
-
-          const targetPosition =
-            target.getBoundingClientRect()
-              .top +
-            window.scrollY;
-
-
-          window.scrollTo({
-
-            top:
-              targetPosition,
-
-            behavior:
-              "smooth"
-
-          });
-
-        }
-      );
-
+      window.scrollTo({
+        top: y,
+        behavior: "smooth"
+      });
     });
-
+  });
 });
