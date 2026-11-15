@@ -1,0 +1,46 @@
+{
+  "projects": [
+    {
+      "title": "Katoen Natie Warehouse",
+      "featured": true,
+      "categories": "construction structural",
+      "duration": "12 months",
+      "value": "$40M",
+      "type": "Warehouse",
+      "tags": ["STRUCTURAL", "CONSTRUCTION", "COORDINATION"],
+      "image": "images/past-projects/kns.jpg",
+      "imageLabel": "WAREHOUSE / STRUCTURE",
+      "summary": "Structural and construction coordination for a major warehouse development.",
+      "writeup": "A major warehouse project involving structural and construction coordination, with focus on translating engineering requirements into buildable site outcomes.",
+      "role": "Structural aspects, project coordination and construction delivery support."
+    },
+    {
+      "title": "A&A at 80 Bendemeer Road",
+      "featured": false,
+      "categories": "construction structural",
+      "duration": "10 months",
+      "value": "$25M",
+      "type": "A&A",
+      "tags": ["A&A", "STRUCTURAL", "PM"],
+      "image": "images/past-projects/80br.jpg",
+      "imageLabel": "A&A / EXISTING BUILDING",
+      "summary": "Additions and alterations requiring close coordination between existing and new works.",
+      "writeup": "An additions and alterations project requiring careful coordination between existing conditions, new works and construction sequencing.",
+      "role": "Project management, coordination and structural/construction interface."
+    },
+    {
+      "title": "T310 Bayshore MRT Station",
+      "featured": false,
+      "categories": "construction digital",
+      "duration": "8 months",
+      "value": "$15M",
+      "type": "MRT",
+      "tags": ["INFRA", "COORDINATION", "DIGITAL"],
+      "image": "images/past-projects/wohhup.jpg",
+      "imageLabel": "MRT / INFRASTRUCTURE",
+      "summary": "Project exposure across infrastructure construction, coordination and delivery.",
+      "writeup": "Infrastructure project exposure involving construction coordination and delivery within a technically complex MRT environment.",
+      "role": "Construction coordination, project delivery and digital workflow exposure."
+    }
+  ]
+}

@@ -2,9 +2,67 @@
    DAVIER TAN — INTERACTIONS
    ========================================================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+/* Loads the project list managed in Pages CMS */
+async function loadProjects() {
+  try {
+    const res = await fetch("projects.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return Array.isArray(data.projects) ? data.projects : [];
+  } catch (err) {
+    console.error("Could not load projects.json", err);
+    return [];
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function projectCode(index) {
+  return `PROJECT / ${String(index + 1).padStart(2, "0")}`;
+}
+
+function renderProjects(projects) {
+  const grid = document.getElementById("project-grid");
+  if (!grid) return;
+
+  grid.innerHTML = projects.map((p, i) => `
+    <article class="project-card${p.featured ? " featured" : ""}" data-category="${escapeHtml(p.categories)}">
+      <div class="project-image">
+        <div class="image-grid"></div>
+        <div class="project-building-shape"></div>
+        ${p.image ? `<img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" loading="lazy">` : ""}
+        <span class="project-stamp mono">${projectCode(i)}</span>
+        <span class="project-image-label mono">${escapeHtml(p.imageLabel)}</span>
+        <div class="scan-line"></div>
+      </div>
+      <div class="project-info">
+        <div class="project-topline mono">
+          <span>${String(i + 1).padStart(2, "0")}</span>
+          <span>${escapeHtml(p.duration)}</span>
+          <span>${escapeHtml(p.value)}</span>
+        </div>
+        <h3>${escapeHtml(p.title)}</h3>
+        <p>${escapeHtml(p.summary)}</p>
+        <div class="project-tags">
+          ${(p.tags || []).map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}
+        </div>
+        <button class="project-expand" type="button" data-project="${i}">
+          <span>View project profile</span><b>↗</b>
+        </button>
+      </div>
+    </article>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
   const body = document.body;
-  const header = document.getElementById("site-header");
   const nav = document.getElementById("main-nav");
   const menuToggle = document.getElementById("menu-toggle");
   const progressFill = document.getElementById("progress-fill");
@@ -12,6 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const cursor = document.getElementById("cursor-measure");
 
   if (year) year.textContent = new Date().getFullYear();
+
+  /* Build the project cards before anything that looks for them */
+  const projects = await loadProjects();
+  renderProjects(projects);
 
   /* ---------------------------------------------------------
      Mobile navigation
@@ -193,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
   revealElements.forEach(el => revealObserver.observe(el));
 
   /* ---------------------------------------------------------
-     Project filtering
+     Project filtering (works on the cards rendered from projects.json)
      --------------------------------------------------------- */
   const filterButtons = document.querySelectorAll(".filter-btn");
   const projectCards = document.querySelectorAll(".project-card");
@@ -252,7 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------------------------------------------------------
-     Project modal
+     Project modal (content comes from projects.json)
      --------------------------------------------------------- */
   const modal = document.getElementById("project-modal");
   const modalTitle = document.getElementById("modal-title");
@@ -261,55 +323,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalStats = document.getElementById("modal-stats");
   const modalRole = document.getElementById("modal-role");
 
-  const projectData = {
-    warehouse: {
-      code: "PROJECT / 01",
-      title: "Katoen Natie Warehouse",
-      description: "A major warehouse project involving structural and construction coordination, with focus on translating engineering requirements into buildable site outcomes.",
-      stats: [
-        ["DURATION", "12 months"],
-        ["PROJECT", "$40M"],
-        ["TYPE", "Warehouse"]
-      ],
-      role: "Structural aspects, project coordination and construction delivery support."
-    },
-    bendemeer: {
-      code: "PROJECT / 02",
-      title: "A&A at 80 Bendemeer Road",
-      description: "An additions and alterations project requiring careful coordination between existing conditions, new works and construction sequencing.",
-      stats: [
-        ["DURATION", "10 months"],
-        ["PROJECT", "$25M"],
-        ["TYPE", "A&A"]
-      ],
-      role: "Project management, coordination and structural/construction interface."
-    },
-    bayshore: {
-      code: "PROJECT / 03",
-      title: "T310 Bayshore MRT Station",
-      description: "Infrastructure project exposure involving construction coordination and delivery within a technically complex MRT environment.",
-      stats: [
-        ["DURATION", "8 months"],
-        ["PROJECT", "$15M"],
-        ["TYPE", "MRT"]
-      ],
-      role: "Construction coordination, project delivery and digital workflow exposure."
-    }
-  };
-
-  function openProject(key) {
-    const data = projectData[key];
+  function openProject(index) {
+    const data = projects[index];
     if (!data || !modal) return;
 
-    modalCode.textContent = data.code;
-    modalTitle.textContent = data.title;
-    modalDescription.textContent = data.description;
-    modalRole.textContent = data.role;
+    modalCode.textContent = projectCode(index);
+    modalTitle.textContent = data.title || "";
+    modalDescription.textContent = data.writeup || "";
+    modalRole.textContent = data.role || "";
 
-    modalStats.innerHTML = data.stats.map(stat => `
+    const stats = [
+      ["DURATION", data.duration],
+      ["PROJECT", data.value],
+      ["TYPE", data.type]
+    ].filter(stat => stat[1]);
+
+    modalStats.innerHTML = stats.map(stat => `
       <div class="modal-stat">
-        <small class="mono">${stat[0]}</small>
-        <strong>${stat[1]}</strong>
+        <small class="mono">${escapeHtml(stat[0])}</small>
+        <strong>${escapeHtml(stat[1])}</strong>
       </div>
     `).join("");
 
@@ -325,8 +357,10 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.remove("modal-open");
   }
 
-  document.querySelectorAll(".project-expand").forEach(button => {
-    button.addEventListener("click", () => openProject(button.dataset.project));
+  /* Delegated listener, because project cards are rendered after load */
+  document.getElementById("project-grid")?.addEventListener("click", event => {
+    const button = event.target.closest(".project-expand");
+    if (button) openProject(Number(button.dataset.project));
   });
 
   document.querySelectorAll("[data-close-modal]").forEach(el => {

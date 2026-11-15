@@ -1,0 +1,59 @@
+media:
+  input: images/past-projects
+  output: /images/past-projects
+
+content:
+  - name: projects
+    label: Projects
+    type: file
+    path: projects.json
+    format: json
+    fields:
+      - name: projects
+        label: Projects
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: Project title
+            type: string
+            required: true
+          - name: featured
+            label: Featured (large card, use on one project only)
+            type: boolean
+            default: false
+          - name: categories
+            label: Categories
+            type: string
+            description: "Space-separated: structural, construction, digital"
+          - name: duration
+            label: Duration
+            type: string
+            description: "e.g. 12 months"
+          - name: value
+            label: Project value
+            type: string
+            description: "e.g. $40M"
+          - name: type
+            label: Project type
+            type: string
+            description: "e.g. Warehouse, MRT, A&A"
+          - name: tags
+            label: Card tags
+            type: string
+            list: true
+          - name: image
+            label: Photo
+            type: image
+          - name: imageLabel
+            label: Photo label
+            type: string
+          - name: summary
+            label: Card summary (one line)
+            type: text
+          - name: writeup
+            label: Project write-up (shown in the popup)
+            type: text
+          - name: role
+            label: Role / scope
+            type: text
